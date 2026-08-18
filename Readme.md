@@ -26,4 +26,4 @@ https://qa-commerce-lab.vercel.app
 
 ## Status
 
-🚧 Project under active development.
+🚧 Project setup in progress.
