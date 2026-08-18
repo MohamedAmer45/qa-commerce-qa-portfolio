@@ -1,0 +1,48 @@
+# Operating system
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Playwright
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# Maven
+target/
+
+# Selenium reports
+allure-results/
+allure-report/
+
+# General reports
+reports/**/*.html
+reports/**/*.xml
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
