@@ -214,26 +214,6 @@ Examples:
 | REQ-CON-009 | Attachment size shall not exceed 2 MB. | High |
 | REQ-CON-010 | Successful submission shall display an acceptance message. | High |
 
-## QA Lab Requirements
-
-| ID | Requirement | Priority |
-|---|---|---|
-| REQ-LAB-001 | QA Lab shall provide deterministic test conditions for automation practice. | High |
-| REQ-LAB-002 | The slow scenario shall return successfully after approximately 1500 ms. | High |
-| REQ-LAB-003 | The empty scenario shall produce HTTP 204. | High |
-| REQ-LAB-004 | The bad-request scenario shall produce HTTP 400. | High |
-| REQ-LAB-005 | The unauthorized scenario shall produce HTTP 401. | High |
-| REQ-LAB-006 | The not-found scenario shall produce HTTP 404. | High |
-| REQ-LAB-007 | The conflict scenario shall produce HTTP 409. | High |
-| REQ-LAB-008 | The validation scenario shall produce HTTP 422 with validation details. | High |
-| REQ-LAB-009 | The rate-limit scenario shall produce HTTP 429. | High |
-| REQ-LAB-010 | The rate-limit response shall include Retry-After: 5. | Medium |
-| REQ-LAB-011 | The server-error scenario shall produce HTTP 500. | High |
-| REQ-LAB-012 | The large-response scenario shall return 250 records. | Medium |
-| REQ-LAB-013 | QA Lab shall support a delayed DOM element. | High |
-| REQ-LAB-014 | The delayed DOM element shall appear after approximately 900 ms. | Medium |
-| REQ-LAB-015 | QA Lab shall provide a modal dialog with Cancel and Confirm actions. | Medium |
-
 
 ## QA Lab Requirements
 
@@ -359,6 +339,91 @@ Examples:
 | REQ-API-REV-005 | Review body shall contain between 10 and 500 characters. | Medium |
 | REQ-API-REV-006 | Review email shall have a valid email format. | High |
 | REQ-API-REV-007 | Successful review creation shall return HTTP 201. | Medium |
+
+
+## Health API Requirements
+
+| ID              | Requirement                                                                | Priority |
+| --------------- | -------------------------------------------------------------------------- | -------- |
+| REQ-API-HLT-001 | GET /api/health shall return HTTP 200 when the API service is operational. | Critical |
+| REQ-API-HLT-002 | The health response shall identify the service status and environment.     | High     |
+| REQ-API-HLT-003 | The health endpoint shall return a JSON response.                          | High     |
+
+---
+
+## Coupons API Requirements
+
+| ID              | Requirement                                                                  | Priority |
+| --------------- | ---------------------------------------------------------------------------- | -------- |
+| REQ-API-CPN-001 | POST /api/coupons shall validate submitted coupon codes.                     | High     |
+| REQ-API-CPN-002 | SAVE10 shall be recognized as a valid percentage-discount coupon.            | High     |
+| REQ-API-CPN-003 | FREESHIP shall be recognized as a valid free-shipping coupon.                | High     |
+| REQ-API-CPN-004 | MIN100 shall enforce its minimum subtotal requirement.                       | High     |
+| REQ-API-CPN-005 | EXPIRED shall be rejected as an expired coupon.                              | Medium   |
+| REQ-API-CPN-006 | Unknown coupon codes shall be rejected.                                      | High     |
+| REQ-API-CPN-007 | Missing coupon information shall produce an appropriate validation error.    | High     |
+| REQ-API-CPN-008 | Coupon processing shall handle case and surrounding whitespace consistently. | Medium   |
+
+---
+
+## Contact API Requirements
+
+| ID              | Requirement                                                                    | Priority |
+| --------------- | ------------------------------------------------------------------------------ | -------- |
+| REQ-API-CON-001 | POST /api/contact shall accept a valid support request.                        | High     |
+| REQ-API-CON-002 | Contact name shall be validated.                                               | Medium   |
+| REQ-API-CON-003 | Contact email shall have a valid email format.                                 | High     |
+| REQ-API-CON-004 | A supported contact subject shall be required.                                 | High     |
+| REQ-API-CON-005 | Contact message length shall be validated.                                     | High     |
+| REQ-API-CON-006 | Invalid contact requests shall return a validation error.                      | High     |
+| REQ-API-CON-007 | A successful contact request shall return a success response.                  | High     |
+| REQ-API-CON-008 | Unexpected additional input shall not cause the endpoint to fail unexpectedly. | Medium   |
+
+---
+
+## Edge-Case API Requirements
+
+| ID               | Requirement                                                                                 | Priority |
+| ---------------- | ------------------------------------------------------------------------------------------- | -------- |
+| REQ-API-EDGE-001 | The slow mode shall provide a controlled delayed successful response.                       | High     |
+| REQ-API-EDGE-002 | The empty mode shall return HTTP 204.                                                       | High     |
+| REQ-API-EDGE-003 | The bad-request mode shall return HTTP 400.                                                 | High     |
+| REQ-API-EDGE-004 | The unauthorized mode shall return HTTP 401.                                                | High     |
+| REQ-API-EDGE-005 | The not-found mode shall return HTTP 404.                                                   | High     |
+| REQ-API-EDGE-006 | The conflict mode shall return HTTP 409.                                                    | High     |
+| REQ-API-EDGE-007 | The validation mode shall return HTTP 422.                                                  | High     |
+| REQ-API-EDGE-008 | The rate-limit mode shall return HTTP 429.                                                  | High     |
+| REQ-API-EDGE-009 | The HTTP 429 response shall contain Retry-After: 5.                                         | Medium   |
+| REQ-API-EDGE-010 | The server-error mode shall return HTTP 500.                                                | High     |
+| REQ-API-EDGE-011 | The large-response mode shall return a deterministic large dataset.                         | Medium   |
+| REQ-API-EDGE-012 | An unsupported edge-case mode shall return an appropriate validation or not-found response. | Medium   |
+
+---
+
+## Echo API Requirements
+
+| ID               | Requirement                                                                                                                | Priority |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------- | -------- |
+| REQ-API-ECHO-001 | The echo endpoint shall provide a deterministic target for inspecting HTTP requests.                                       | Medium   |
+| REQ-API-ECHO-002 | The endpoint shall support testing multiple HTTP methods.                                                                  | Medium   |
+| REQ-API-ECHO-003 | Query parameters shall be handled without causing unexpected failures.                                                     | Medium   |
+| REQ-API-ECHO-004 | Request headers shall be handled without causing unexpected failures.                                                      | Medium   |
+| REQ-API-ECHO-005 | Request bodies shall be handled where the selected HTTP method supports a body.                                            | Medium   |
+| REQ-API-ECHO-006 | Unsupported or malformed requests shall return a controlled response rather than causing an unhandled application failure. | Medium   |
+
+---
+
+## Compatibility and Presentation Requirements
+
+| ID          | Requirement                                                                                          | Priority |
+| ----------- | ---------------------------------------------------------------------------------------------------- | -------- |
+| REQ-NFR-001 | Core customer workflows shall remain usable on supported desktop browsers.                           | High     |
+| REQ-NFR-002 | The application shall remain usable at desktop, tablet, and mobile viewport sizes.                   | High     |
+| REQ-NFR-003 | Responsive layouts shall not cause critical controls to become inaccessible.                         | High     |
+| REQ-NFR-004 | Long product names shall not make the surrounding interface unusable.                                | Medium   |
+| REQ-NFR-005 | Unicode and multilingual product content shall render without corrupting the interface.              | Medium   |
+| REQ-NFR-006 | User actions shall provide meaningful visible feedback where confirmation or validation is required. | Medium   |
+
 
 
 ## Priority Definitions
