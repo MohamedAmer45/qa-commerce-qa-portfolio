@@ -47,3 +47,4 @@ reports/**/*.xml
 *.tmp
 *.temp
 node_modules/
+selenium/target/

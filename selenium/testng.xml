@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="QA Commerce Lab Selenium Suite"
+       verbose="1"
+       parallel="false">
+
+    <listeners>
+        <listener class-name="com.qacommercelab.listeners.TestListener"/>
+    </listeners>
+
+    <test name="UI Automation Tests">
+
+        <packages>
+            <package name="com.qacommercelab.tests"/>
+        </packages>
+
+    </test>
+
+</suite>
