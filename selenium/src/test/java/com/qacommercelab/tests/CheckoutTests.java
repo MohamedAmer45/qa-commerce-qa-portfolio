@@ -17,363 +17,368 @@ import io.qameta.allure.SeverityLevel;
 @Feature("Checkout")
 public class CheckoutTests extends BaseTest {
 
-    private CheckoutPage prepareCheckout() {
+        private CheckoutPage prepareCheckout() {
 
-        LoginPage loginPage = new LoginPage(driver);
+                LoginPage loginPage = new LoginPage(driver);
 
-        loginPage.open();
+                loginPage.open();
 
-        loginPage.login(
-                ConfigReader.get("seedEmail"),
-                ConfigReader.get("seedPassword"));
+                loginPage.login(
+                                ConfigReader.get("seedEmail"),
+                                ConfigReader.get("seedPassword"));
 
-        Assert.assertTrue(
-                loginPage.isAccountPageDisplayed(),
-                "Login failed during checkout setup.");
+                Assert.assertTrue(
+                                loginPage.isAccountPageDisplayed(),
+                                "Login failed during checkout setup.");
 
-        ProductsPage productsPage = new ProductsPage(driver);
+                ProductsPage productsPage = new ProductsPage(driver);
 
-        productsPage.open();
-        productsPage.addProductToCart(10);
+                productsPage.open();
+                productsPage.addProductToCart(10);
 
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
+                CheckoutPage checkoutPage = new CheckoutPage(driver);
 
-        checkoutPage.open();
+                checkoutPage.open();
 
-        return checkoutPage;
-    }
+                return checkoutPage;
+        }
 
-    @Test(groups = { "smoke", "checkout" }, description = "Authenticated checkout pre-fills account data")
-    public void checkoutPrefillsAccountInformation() {
+        @Test(groups = { "smoke", "checkout" }, description = "Authenticated checkout pre-fills account data")
+        public void checkoutPrefillsAccountInformation() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        Assert.assertEquals(
-                checkoutPage.getFirstName(),
-                "QA");
+                Assert.assertEquals(
+                                checkoutPage.getFirstName(),
+                                "QA");
 
-        Assert.assertEquals(
-                checkoutPage.getLastName(),
-                "Tester");
+                Assert.assertEquals(
+                                checkoutPage.getLastName(),
+                                "Tester");
 
-        Assert.assertEquals(
-                checkoutPage.getEmail(),
-                "qa.user@example.com");
-    }
+                Assert.assertEquals(
+                                checkoutPage.getEmail(),
+                                "qa.user@example.com");
+        }
 
-    @Test(groups = { "regression", "checkout" }, description = "Missing required shipping field is rejected")
-    public void missingRequiredShippingFieldIsRejected() {
+        @Test(groups = { "regression", "checkout" }, description = "Missing required shipping field is rejected")
+        public void missingRequiredShippingFieldIsRejected() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
-        checkoutPage.setCity("");
+                checkoutPage.fillValidShipping();
+                checkoutPage.setCity("");
 
-        checkoutPage.fillValidPayment();
-        checkoutPage.submitOrder();
+                checkoutPage.fillValidPayment();
+                checkoutPage.submitOrder();
 
-        Assert.assertEquals(
-                checkoutPage.getMessage(),
-                "Complete valid shipping fields.");
-    }
+                Assert.assertEquals(
+                                checkoutPage.getMessage(),
+                                "Complete valid shipping fields.");
+        }
 
-    @Test(groups = { "regression", "checkout" }, description = "Short address is rejected")
-    public void shortAddressIsRejected() {
+        @Test(groups = { "regression", "checkout" }, description = "Short address is rejected")
+        public void shortAddressIsRejected() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
-        checkoutPage.setAddress("1234");
+                checkoutPage.fillValidShipping();
+                checkoutPage.setAddress("1234");
 
-        checkoutPage.fillValidPayment();
-        checkoutPage.submitOrder();
+                checkoutPage.fillValidPayment();
+                checkoutPage.submitOrder();
 
-        Assert.assertEquals(
-                checkoutPage.getMessage(),
-                "Address too short.");
-    }
+                Assert.assertEquals(
+                                checkoutPage.getMessage(),
+                                "Address too short.");
+        }
 
-    @Test(groups = { "regression", "checkout" }, description = "Invalid Luhn card is rejected")
-    public void invalidCardIsRejected() {
+        @Test(groups = { "regression", "checkout" }, description = "Invalid Luhn card is rejected")
+        public void invalidCardIsRejected() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
+                checkoutPage.fillValidShipping();
 
-        checkoutPage.fillPayment(
-                "1234567890123456",
-                "12/30",
-                "123");
+                checkoutPage.fillPayment(
+                                "1234567890123456",
+                                "12/30",
+                                "123");
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        Assert.assertEquals(
-                checkoutPage.getMessage(),
-                "Card failed validation.");
-    }
+                Assert.assertEquals(
+                                checkoutPage.getMessage(),
+                                "Card failed validation.");
+        }
 
-    @Test(groups = { "regression", "checkout" }, description = "Two digit CVV is rejected")
-    public void twoDigitCvvIsRejected() {
+        @Test(groups = { "regression", "checkout" }, description = "Two digit CVV is rejected")
+        public void twoDigitCvvIsRejected() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
+                checkoutPage.fillValidShipping();
 
-        checkoutPage.fillPayment(
-                "4242424242424242",
-                "12/30",
-                "12");
+                checkoutPage.fillPayment(
+                                "4242424242424242",
+                                "12/30",
+                                "12");
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        Assert.assertEquals(
-                checkoutPage.getMessage(),
-                "Expiry/CVV invalid.");
-    }
+                Assert.assertEquals(
+                                checkoutPage.getMessage(),
+                                "Expiry/CVV invalid.");
+        }
 
-    @Test(groups = { "regression", "checkout" }, description = "Five digit CVV is rejected")
-    public void fiveDigitCvvIsRejected() {
+        @Test(groups = { "regression", "checkout" }, description = "Five digit CVV is rejected")
+        public void fiveDigitCvvIsRejected() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
+                checkoutPage.fillValidShipping();
 
-        checkoutPage.fillPayment(
-                "4242424242424242",
-                "12/30",
-                "12345");
+                checkoutPage.fillPayment(
+                                "4242424242424242",
+                                "12/30",
+                                "12345");
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        Assert.assertEquals(
-                checkoutPage.getMessage(),
-                "Expiry/CVV invalid.");
-    }
+                Assert.assertEquals(
+                                checkoutPage.getMessage(),
+                                "Expiry/CVV invalid.");
+        }
 
-    @Test(groups = { "regression", "checkout" }, description = "Invalid expiry format is rejected")
-    public void invalidExpiryFormatIsRejected() {
+        @Test(groups = { "regression", "checkout" }, description = "Invalid expiry format is rejected")
+        public void invalidExpiryFormatIsRejected() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
+                checkoutPage.fillValidShipping();
 
-        checkoutPage.fillPayment(
-                "4242424242424242",
-                "1230",
-                "123");
+                checkoutPage.fillPayment(
+                                "4242424242424242",
+                                "1230",
+                                "123");
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        Assert.assertEquals(
-                checkoutPage.getMessage(),
-                "Expiry/CVV invalid.");
-    }
+                Assert.assertEquals(
+                                checkoutPage.getMessage(),
+                                "Expiry/CVV invalid.");
+        }
 
-    @Test(groups = { "regression", "checkout" }, description = "Declined payment card displays decline message")
-    public void declinedCardShowsPaymentDeclined() {
+        @Test(groups = { "regression", "checkout" }, description = "Declined payment card displays decline message")
+        public void declinedCardShowsPaymentDeclined() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
+                checkoutPage.fillValidShipping();
 
-        checkoutPage.fillPayment(
-                "4000000000000002",
-                "12/30",
-                "123");
+                checkoutPage.fillPayment(
+                                "4000000000000002",
+                                "12/30",
+                                "123");
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        Assert.assertEquals(
-                checkoutPage.getMessage(),
-                "Payment declined.");
-    }
+                Assert.assertEquals(
+                                checkoutPage.getMessage(),
+                                "Payment declined.");
+        }
 
-    @Test(groups = { "regression", "checkout" }, description = "Insufficient funds card displays correct message")
-    public void insufficientFundsCardShowsError() {
+        @Test(groups = { "regression", "checkout" }, description = "Insufficient funds card displays correct message")
+        public void insufficientFundsCardShowsError() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
+                checkoutPage.fillValidShipping();
 
-        checkoutPage.fillPayment(
-                "4000000000009995",
-                "12/30",
-                "123");
+                checkoutPage.fillPayment(
+                                "4000000000009995",
+                                "12/30",
+                                "123");
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        Assert.assertEquals(
-                checkoutPage.getMessage(),
-                "Insufficient funds.");
-    }
+                Assert.assertEquals(
+                                checkoutPage.getMessage(),
+                                "Insufficient funds.");
+        }
 
-    @Test(groups = { "regression", "checkout" }, description = "Card number containing spaces is accepted")
-    public void cardNumberWithSpacesIsAccepted() {
+        @Test(groups = { "regression", "checkout" }, description = "Card number containing spaces is accepted")
+        public void cardNumberWithSpacesIsAccepted() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
+                checkoutPage.fillValidShipping();
 
-        checkoutPage.fillPayment(
-                "4242 4242 4242 4242",
-                "12/30",
-                "123");
+                checkoutPage.fillPayment(
+                                "4242 4242 4242 4242",
+                                "12/30",
+                                "123");
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        Assert.assertTrue(
-                checkoutPage.waitForOrderSuccess(),
-                "Order should succeed with spaces in card number.");
-    }
+                Assert.assertTrue(
+                                checkoutPage.waitForOrderSuccess(),
+                                "Order should succeed with spaces in card number.");
+        }
 
-    @Test(groups = { "smoke", "checkout" }, description = "Valid checkout creates order successfully")
-    public void validCheckoutCreatesOrder() {
+        @Test(groups = { "smoke", "checkout" }, description = "Valid checkout creates order successfully")
+        public void validCheckoutCreatesOrder() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
-        checkoutPage.fillValidPayment();
+                checkoutPage.fillValidShipping();
+                checkoutPage.fillValidPayment();
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        Assert.assertTrue(
-                checkoutPage.waitForOrderSuccess(),
-                "Order success confirmation was not displayed.");
+                Assert.assertTrue(
+                                checkoutPage.waitForOrderSuccess(),
+                                "Order success confirmation was not displayed.");
 
-        Assert.assertTrue(
-                checkoutPage
-                        .getOrderSuccessText()
-                        .contains("Order confirmed"));
+                Assert.assertTrue(
+                                checkoutPage
+                                                .getOrderSuccessText()
+                                                .contains("Order confirmed"));
 
-        Assert.assertTrue(
-                checkoutPage
-                        .getOrderSuccessText()
-                        .contains("ORD-QA-1001"));
-    }
+                Assert.assertTrue(
+                                checkoutPage
+                                                .getOrderSuccessText()
+                                                .contains("ORD-QA-1001"));
+        }
 
-    @Test(groups = { "regression", "checkout" }, description = "Place order button is disabled during processing")
-    public void duplicateSubmissionIsPrevented() {
+        @Test(groups = { "regression", "checkout" }, description = "Place order button is disabled during processing")
+        public void duplicateSubmissionIsPrevented() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
-        checkoutPage.fillValidPayment();
+                checkoutPage.fillValidShipping();
+                checkoutPage.fillValidPayment();
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        Assert.assertTrue(
-                checkoutPage.isPlaceOrderDisabled(),
-                "Place order button should be disabled while processing.");
+                Assert.assertTrue(
+                                checkoutPage.isPlaceOrderDisabled(),
+                                "Place order button should be disabled while processing.");
 
-        Assert.assertEquals(
-                checkoutPage.getPlaceOrderButtonText(),
-                "Processing…");
+                Assert.assertEquals(
+                                checkoutPage.getPlaceOrderButtonText(),
+                                "Processing…");
 
-        Assert.assertTrue(
-                checkoutPage.waitForOrderSuccess(),
-                "Order confirmation was not displayed.");
-    }
+                Assert.assertTrue(
+                                checkoutPage.waitForOrderSuccess(),
+                                "Order confirmation was not displayed.");
+        }
 
-    @Test(groups = { "regression", "checkout",
-            "cart" }, description = "Successful checkout clears cart and immediately updates cart counter")
-    @Issue("BUG-UI-CHK-001")
-    @Severity(SeverityLevel.NORMAL)
-    public void successfulCheckoutClearsCartAndUpdatesCounter() {
+        @Test(groups = {
+                        "regression",
+                        "checkout",
+                        "cart",
+                        "known-defect"
+        }, description = "BUG-UI-CHK-001 — Cart counter updates immediately after checkout")
+        @Issue("BUG-UI-CHK-001")
+        @Severity(SeverityLevel.NORMAL)
+        public void successfulCheckoutClearsCartAndUpdatesCounter() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        Assert.assertEquals(
-                checkoutPage.getCartCount(),
-                1,
-                "Cart should contain one product before checkout.");
+                Assert.assertEquals(
+                                checkoutPage.getCartCount(),
+                                1,
+                                "Cart should contain one product before checkout.");
 
-        checkoutPage.fillValidShipping();
-        checkoutPage.fillValidPayment();
+                checkoutPage.fillValidShipping();
+                checkoutPage.fillValidPayment();
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        Assert.assertTrue(
-                checkoutPage.waitForOrderSuccess(),
-                "Order confirmation was not displayed.");
+                Assert.assertTrue(
+                                checkoutPage.waitForOrderSuccess(),
+                                "Order confirmation was not displayed.");
 
-        /*
-         * Known defect candidate: BUG-UI-CHK-001
-         *
-         * The persisted cart is cleared successfully, but the navigation
-         * cart counter is not re-rendered immediately after checkout.
-         *
-         * Expected: 0
-         * Current application behavior: 1
-         *
-         * Keep this assertion failing while the application defect exists.
-         */
-        Assert.assertEquals(
-                checkoutPage.getCartCount(),
-                0,
-                "Cart counter should update to 0 immediately after successful checkout.");
-    }
+                /*
+                 * Known defect candidate: BUG-UI-CHK-001
+                 *
+                 * The persisted cart is cleared successfully, but the navigation
+                 * cart counter is not re-rendered immediately after checkout.
+                 *
+                 * Expected: 0
+                 * Current application behavior: 1
+                 *
+                 * Keep this assertion failing while the application defect exists.
+                 */
+                Assert.assertEquals(
+                                checkoutPage.getCartCount(),
+                                0,
+                                "Cart counter should update to 0 immediately after successful checkout.");
+        }
 
-    @Test(groups = { "regression", "checkout",
-            "cart" }, description = "Successful checkout clears persisted cart state")
-    public void successfulCheckoutClearsPersistedCart() {
+        @Test(groups = { "regression", "checkout",
+                        "cart" }, description = "Successful checkout clears persisted cart state")
+        public void successfulCheckoutClearsPersistedCart() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        Assert.assertEquals(
-                checkoutPage.getCartCount(),
-                1,
-                "Cart should contain one product before checkout.");
+                Assert.assertEquals(
+                                checkoutPage.getCartCount(),
+                                1,
+                                "Cart should contain one product before checkout.");
 
-        checkoutPage.fillValidShipping();
-        checkoutPage.fillValidPayment();
+                checkoutPage.fillValidShipping();
+                checkoutPage.fillValidPayment();
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        Assert.assertTrue(
-                checkoutPage.waitForOrderSuccess(),
-                "Order confirmation was not displayed.");
+                Assert.assertTrue(
+                                checkoutPage.waitForOrderSuccess(),
+                                "Order confirmation was not displayed.");
 
-        /*
-         * Refresh forces the navigation to re-render from localStorage.
-         * If the checkout actually cleared the persisted cart,
-         * the counter should now show zero.
-         */
-        driver.navigate().refresh();
+                /*
+                 * Refresh forces the navigation to re-render from localStorage.
+                 * If the checkout actually cleared the persisted cart,
+                 * the counter should now show zero.
+                 */
+                driver.navigate().refresh();
 
-        Assert.assertEquals(
-                checkoutPage.getCartCount(),
-                0,
-                "Persisted cart was not cleared after successful checkout.");
-    }
+                Assert.assertEquals(
+                                checkoutPage.getCartCount(),
+                                0,
+                                "Persisted cart was not cleared after successful checkout.");
+        }
 
-    @Test(groups = {
-            "regression",
-            "checkout",
-            "defect-candidate"
-    }, description = "Checkout rejects impossible expiry month")
-    @Issue("BUG-UI-CHK-002")
-    @Severity(SeverityLevel.CRITICAL)
-    public void impossibleExpiryMonthIsRejected() {
+        @Test(groups = {
+                        "regression",
+                        "checkout",
+                        "defect-candidate",
+                        "known-defect"
+        }, description = "BUG-UI-CHK-002 — Checkout rejects impossible expiry month")
+        @Issue("BUG-UI-CHK-002")
+        @Severity(SeverityLevel.CRITICAL)
+        public void impossibleExpiryMonthIsRejected() {
 
-        CheckoutPage checkoutPage = prepareCheckout();
+                CheckoutPage checkoutPage = prepareCheckout();
 
-        checkoutPage.fillValidShipping();
+                checkoutPage.fillValidShipping();
 
-        checkoutPage.fillPayment(
-                "4242424242424242",
-                "13/30",
-                "123");
+                checkoutPage.fillPayment(
+                                "4242424242424242",
+                                "13/30",
+                                "123");
 
-        checkoutPage.submitOrder();
+                checkoutPage.submitOrder();
 
-        boolean orderSucceeded = checkoutPage.isOrderSuccessVisibleWithin(2);
+                boolean orderSucceeded = checkoutPage.isOrderSuccessVisibleWithin(2);
 
-        Assert.assertFalse(
-                orderSucceeded,
-                "Checkout accepted invalid expiry month 13.");
+                Assert.assertFalse(
+                                orderSucceeded,
+                                "Checkout accepted invalid expiry month 13.");
 
-        Assert.assertEquals(
-                checkoutPage.getMessage(),
-                "Expiry/CVV invalid.");
-    }
+                Assert.assertEquals(
+                                checkoutPage.getMessage(),
+                                "Expiry/CVV invalid.");
+        }
 }
