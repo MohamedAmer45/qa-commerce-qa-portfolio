@@ -5123,60 +5123,6 @@
             }
           },
           "response": []
-        },
-        {
-          "name": "25 - Order - Duplicate Lines Exceed Stock",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Combined duplicate quantity must not exceed stock\", function () {\r",
-                  "    pm.response.to.have.status(409);\r",
-                  "});\r",
-                  "\r",
-                  "if (pm.response.code === 409) {\r",
-                  "    const json = pm.response.json();\r",
-                  "\r",
-                  "    pm.test(\"INSUFFICIENT_STOCK is returned\", function () {\r",
-                  "        pm.expect(json.error).to.eql(\"INSUFFICIENT_STOCK\");\r",
-                  "    });\r",
-                  "\r",
-                  "    pm.test(\"Available stock is reported\", function () {\r",
-                  "        pm.expect(json.productId).to.eql(2);\r",
-                  "        pm.expect(json.available).to.eql(1);\r",
-                  "    });\r",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    }\r\n  ],\r\n  \"shipping\": {\r\n    \"email\": \"qa.user@example.com\",\r\n    \"address\": \"123 QA Street\"\r\n  },\r\n  \"payment\": {\r\n    \"cardNumber\": \"4242424242424242\"\r\n  }\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/orders",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "orders"
-              ]
-            }
-          },
-          "response": []
         }
       ]
     },

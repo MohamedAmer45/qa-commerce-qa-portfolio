@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "test": "newman run QA-Commerce-Lab-API.postman_collection.json -e QA-Commerce-Lab-Production.postman_environment.json",
-  "report": "newman run QA-Commerce-Lab-API.postman_collection.json -e QA-Commerce-Lab-Production.postman_environment.json -r cli,htmlextra,json --reporter-htmlextra-export ../../reports/postman/postman-report.html --reporter-json-export ../../reports/postman/postman-report.json"
-},
+    "test": "newman run QA-Commerce-Lab-API.postman_collection.json -e QA-Commerce-Lab-Production.postman_environment.json",
+    "report": "newman run QA-Commerce-Lab-API.postman_collection.json -e QA-Commerce-Lab-Production.postman_environment.json -r cli,htmlextra,json --reporter-htmlextra-export ../../reports/postman/postman-report.html --reporter-json-export ../../reports/postman/postman-report.json",
+    "test:ci": "newman run QA-Commerce-Lab-API.postman_collection.json -e QA-Commerce-Lab-Production.postman_environment.json -r cli,htmlextra,json --reporter-htmlextra-export ../../reports/postman/postman-report.html --reporter-json-export ../../reports/postman/postman-report.json",
+    "test:defects": "newman run QA-Commerce-Lab-Known-Defects.postman_collection.json -e QA-Commerce-Lab-Production.postman_environment.json -r cli,htmlextra,json --reporter-htmlextra-export ../../reports/postman/known-defects-report.html --reporter-json-export ../../reports/postman/known-defects-report.json"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
