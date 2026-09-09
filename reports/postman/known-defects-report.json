@@ -1,0 +1,682 @@
+{
+  "collection": {
+    "_": {
+      "postman_id": "71976e0e-6cda-4dc8-aa29-937ae6d504d1",
+      "exporter_id": "13941728"
+    },
+    "item": [
+      {
+        "id": "1ca63e00-f8bd-4fca-bf49-05134c86aaec",
+        "name": "BUG-API-ORD-001 - Duplicate Lines Bypass Stock Validation",
+        "request": {
+          "url": {
+            "path": [
+              "orders"
+            ],
+            "host": [
+              "{{baseUrl}}"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    }\r\n  ],\r\n  \"shipping\": {\r\n    \"email\": \"qa.user@example.com\",\r\n    \"address\": \"123 QA Street\"\r\n  },\r\n  \"payment\": {\r\n    \"cardNumber\": \"4242424242424242\"\r\n  }\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "4bc75d4d-c697-477b-abbf-16892dcb3ec9",
+              "type": "text/javascript",
+              "packages": {},
+              "exec": [
+                "pm.test(\"Combined duplicate quantity must not exceed stock\", function () {\r",
+                "    pm.response.to.have.status(409);\r",
+                "});\r",
+                "\r",
+                "if (pm.response.code === 409) {\r",
+                "    const json = pm.response.json();\r",
+                "\r",
+                "    pm.test(\"INSUFFICIENT_STOCK is returned\", function () {\r",
+                "        pm.expect(json.error).to.eql(\"INSUFFICIENT_STOCK\");\r",
+                "    });\r",
+                "\r",
+                "    pm.test(\"Available stock is reported\", function () {\r",
+                "        pm.expect(json.productId).to.eql(2);\r",
+                "        pm.expect(json.available).to.eql(1);\r",
+                "    });\r",
+                "}"
+              ],
+              "_lastExecutionId": "a9732bb2-2016-4378-b44d-02b2b411d86f"
+            }
+          }
+        ]
+      }
+    ],
+    "event": [],
+    "variable": [],
+    "info": {
+      "_postman_id": "71976e0e-6cda-4dc8-aa29-937ae6d504d1",
+      "name": "QA Commerce Lab - Known Defects",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+  },
+  "environment": {
+    "_": {
+      "postman_variable_scope": "environment",
+      "postman_exported_at": "2026-09-07T19:52:54.578Z",
+      "postman_exported_using": "Postman/12.27.0"
+    },
+    "id": "0dd976a9-2002-4478-8ded-6e74770296a6",
+    "name": "QA Commerce Lab - Production",
+    "values": [
+      {
+        "type": "any",
+        "value": "https://qa-commerce-lab.vercel.app/api",
+        "key": "baseUrl"
+      },
+      {
+        "type": "any",
+        "value": "qa.user@example.com",
+        "key": "seedEmail"
+      },
+      {
+        "type": "any",
+        "value": "Password123!",
+        "key": "seedPassword"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "createdUserId"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "createdUserEmail"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "authToken"
+      },
+      {
+        "type": "any",
+        "value": "1",
+        "key": "productId"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "orderId"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "largeResponseSignature"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "echoDeterministicResponse"
+      }
+    ]
+  },
+  "globals": {
+    "id": "56a7154d-d59e-431d-a26a-fd919f0fb884",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 1,
+        "pending": 0,
+        "failed": 1
+      },
+      "testScripts": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 0,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 390,
+      "responseMin": 390,
+      "responseMax": 390,
+      "responseSd": 0,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1788981721846,
+      "completed": 1788981722289
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 1,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "c036230d-ca7b-472a-8c56-862e0439b0a4",
+          "httpRequestId": "4631d1de-6b38-4ba2-b599-a56283699106"
+        },
+        "item": {
+          "id": "1ca63e00-f8bd-4fca-bf49-05134c86aaec",
+          "name": "BUG-API-ORD-001 - Duplicate Lines Bypass Stock Validation",
+          "request": {
+            "url": {
+              "path": [
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    }\r\n  ],\r\n  \"shipping\": {\r\n    \"email\": \"qa.user@example.com\",\r\n    \"address\": \"123 QA Street\"\r\n  },\r\n  \"payment\": {\r\n    \"cardNumber\": \"4242424242424242\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "4bc75d4d-c697-477b-abbf-16892dcb3ec9",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.test(\"Combined duplicate quantity must not exceed stock\", function () {\r",
+                  "    pm.response.to.have.status(409);\r",
+                  "});\r",
+                  "\r",
+                  "if (pm.response.code === 409) {\r",
+                  "    const json = pm.response.json();\r",
+                  "\r",
+                  "    pm.test(\"INSUFFICIENT_STOCK is returned\", function () {\r",
+                  "        pm.expect(json.error).to.eql(\"INSUFFICIENT_STOCK\");\r",
+                  "    });\r",
+                  "\r",
+                  "    pm.test(\"Available stock is reported\", function () {\r",
+                  "        pm.expect(json.productId).to.eql(2);\r",
+                  "        pm.expect(json.available).to.eql(1);\r",
+                  "    });\r",
+                  "}"
+                ],
+                "_lastExecutionId": "a9732bb2-2016-4378-b44d-02b2b411d86f"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "https",
+            "path": [
+              "api",
+              "orders"
+            ],
+            "host": [
+              "qa-commerce-lab",
+              "vercel",
+              "app"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "b5053851-34de-4232-ae72-adbb18d34534",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "qa-commerce-lab.vercel.app",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "268",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    }\r\n  ],\r\n  \"shipping\": {\r\n    \"email\": \"qa.user@example.com\",\r\n    \"address\": \"123 QA Street\"\r\n  },\r\n  \"payment\": {\r\n    \"cardNumber\": \"4242424242424242\"\r\n  }\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "b6fa6d8a-d526-470c-87e6-3c955e8cb7bf",
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization, X-Test-Id"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            },
+            {
+              "key": "Content-Length",
+              "value": "86"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 09 Sep 2026 19:22:04 GMT"
+            },
+            {
+              "key": "Etag",
+              "value": "W/\"56-1G3IpRyqXr5fAYz4hD/WQ0FQdSw\""
+            },
+            {
+              "key": "Server",
+              "value": "Vercel"
+            },
+            {
+              "key": "Strict-Transport-Security",
+              "value": "max-age=63072000; includeSubDomains; preload"
+            },
+            {
+              "key": "X-Qa-Lab",
+              "value": "QA-Commerce"
+            },
+            {
+              "key": "X-Vercel-Cache",
+              "value": "MISS"
+            },
+            {
+              "key": "X-Vercel-Id",
+              "value": "fra1::iad1::zmmtb-1788981724700-8acedd41e686"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              100,
+              97,
+              116,
+              97,
+              34,
+              58,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              34,
+              79,
+              82,
+              68,
+              45,
+              65,
+              80,
+              73,
+              45,
+              48,
+              48,
+              48,
+              49,
+              34,
+              44,
+              34,
+              115,
+              116,
+              97,
+              116,
+              117,
+              115,
+              34,
+              58,
+              34,
+              67,
+              111,
+              110,
+              102,
+              105,
+              114,
+              109,
+              101,
+              100,
+              34,
+              44,
+              34,
+              115,
+              117,
+              98,
+              116,
+              111,
+              116,
+              97,
+              108,
+              34,
+              58,
+              50,
+              53,
+              57,
+              46,
+              57,
+              56,
+              44,
+              34,
+              99,
+              117,
+              114,
+              114,
+              101,
+              110,
+              99,
+              121,
+              34,
+              58,
+              34,
+              85,
+              83,
+              68,
+              34,
+              125,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 390,
+          "responseSize": 86
+        },
+        "id": "1ca63e00-f8bd-4fca-bf49-05134c86aaec",
+        "assertions": [
+          {
+            "assertion": "Combined duplicate quantity must not exceed stock",
+            "skipped": false,
+            "error": {
+              "name": "AssertionError",
+              "index": 0,
+              "test": "Combined duplicate quantity must not exceed stock",
+              "message": "expected response to have status code 409 but got 201",
+              "stack": "AssertionError: expected response to have status code 409 but got 201\n   at Object.eval sandbox-script.js:1:1)"
+            }
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 86
+    },
+    "failures": [
+      {
+        "error": {
+          "name": "AssertionError",
+          "index": 0,
+          "test": "Combined duplicate quantity must not exceed stock",
+          "message": "expected response to have status code 409 but got 201",
+          "stack": "AssertionError: expected response to have status code 409 but got 201\n   at Object.eval sandbox-script.js:1:1)",
+          "checksum": "617775e2f5d7c9516568ea710c432e8a",
+          "id": "0a67926b-a034-4aa1-9921-42c9247c75bd",
+          "timestamp": 1788981722268,
+          "stacktrace": [
+            {
+              "fileName": "sandbox-script.js",
+              "lineNumber": 1,
+              "functionName": "Object.eval",
+              "typeName": "Object",
+              "methodName": "eval",
+              "columnNumber": 1,
+              "native": false
+            }
+          ]
+        },
+        "at": "assertion:0 in test-script",
+        "source": {
+          "id": "1ca63e00-f8bd-4fca-bf49-05134c86aaec",
+          "name": "BUG-API-ORD-001 - Duplicate Lines Bypass Stock Validation",
+          "request": {
+            "url": {
+              "path": [
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    }\r\n  ],\r\n  \"shipping\": {\r\n    \"email\": \"qa.user@example.com\",\r\n    \"address\": \"123 QA Street\"\r\n  },\r\n  \"payment\": {\r\n    \"cardNumber\": \"4242424242424242\"\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "4bc75d4d-c697-477b-abbf-16892dcb3ec9",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.test(\"Combined duplicate quantity must not exceed stock\", function () {\r",
+                  "    pm.response.to.have.status(409);\r",
+                  "});\r",
+                  "\r",
+                  "if (pm.response.code === 409) {\r",
+                  "    const json = pm.response.json();\r",
+                  "\r",
+                  "    pm.test(\"INSUFFICIENT_STOCK is returned\", function () {\r",
+                  "        pm.expect(json.error).to.eql(\"INSUFFICIENT_STOCK\");\r",
+                  "    });\r",
+                  "\r",
+                  "    pm.test(\"Available stock is reported\", function () {\r",
+                  "        pm.expect(json.productId).to.eql(2);\r",
+                  "        pm.expect(json.available).to.eql(1);\r",
+                  "    });\r",
+                  "}"
+                ],
+                "_lastExecutionId": "a9732bb2-2016-4378-b44d-02b2b411d86f"
+              }
+            }
+          ]
+        },
+        "parent": {
+          "_": {
+            "postman_id": "71976e0e-6cda-4dc8-aa29-937ae6d504d1",
+            "exporter_id": "13941728"
+          },
+          "item": [
+            {
+              "id": "1ca63e00-f8bd-4fca-bf49-05134c86aaec",
+              "name": "BUG-API-ORD-001 - Duplicate Lines Bypass Stock Validation",
+              "request": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"qty\": 1\r\n    }\r\n  ],\r\n  \"shipping\": {\r\n    \"email\": \"qa.user@example.com\",\r\n    \"address\": \"123 QA Street\"\r\n  },\r\n  \"payment\": {\r\n    \"cardNumber\": \"4242424242424242\"\r\n  }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "4bc75d4d-c697-477b-abbf-16892dcb3ec9",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "pm.test(\"Combined duplicate quantity must not exceed stock\", function () {\r",
+                      "    pm.response.to.have.status(409);\r",
+                      "});\r",
+                      "\r",
+                      "if (pm.response.code === 409) {\r",
+                      "    const json = pm.response.json();\r",
+                      "\r",
+                      "    pm.test(\"INSUFFICIENT_STOCK is returned\", function () {\r",
+                      "        pm.expect(json.error).to.eql(\"INSUFFICIENT_STOCK\");\r",
+                      "    });\r",
+                      "\r",
+                      "    pm.test(\"Available stock is reported\", function () {\r",
+                      "        pm.expect(json.productId).to.eql(2);\r",
+                      "        pm.expect(json.available).to.eql(1);\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "_lastExecutionId": "a9732bb2-2016-4378-b44d-02b2b411d86f"
+                  }
+                }
+              ]
+            }
+          ],
+          "event": [],
+          "variable": [],
+          "info": {
+            "_postman_id": "71976e0e-6cda-4dc8-aa29-937ae6d504d1",
+            "name": "QA Commerce Lab - Known Defects",
+            "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+          }
+        },
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 1,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "c036230d-ca7b-472a-8c56-862e0439b0a4",
+          "httpRequestId": "4631d1de-6b38-4ba2-b599-a56283699106",
+          "scriptId": "4bc75d4d-c697-477b-abbf-16892dcb3ec9",
+          "execution": "a9732bb2-2016-4378-b44d-02b2b411d86f"
+        }
+      }
+    ],
+    "error": null
+  }
+}

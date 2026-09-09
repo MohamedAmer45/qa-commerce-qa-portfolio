@@ -56,3 +56,6 @@ playwright/blob-report/
 
 reports/playwright/test-results/
 reports/playwright/html-report/
+
+reports/postman/postman-report.html
+reports/postman/postman-report.json
