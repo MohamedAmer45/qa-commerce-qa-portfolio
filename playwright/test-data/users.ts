@@ -1,0 +1,11 @@
+export const users = {
+  seed: {
+    email: "qa.user@example.com",
+    password: "Password123!",
+  },
+
+  invalid: {
+    email: "invalid.user@example.com",
+    password: "WrongPassword123!",
+  },
+} as const;
