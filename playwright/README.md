@@ -1,5 +1,7 @@
 # QA Commerce Lab — Playwright + TypeScript Automation
 
+[![Playwright Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/<YOUR-GITHUB-USERNAME>/qa-commerce-qa-portfolio/actions/workflows/playwright.yml)
+
 Comprehensive Playwright automation framework for the **QA Commerce Lab** QA portfolio project.
 
 The framework demonstrates modern browser automation using TypeScript, Page Object Model architecture, isolated browser contexts, reusable authentication state, network interception, API mocking, cross-browser execution, reporting, and executable known-defect verification.
@@ -1072,3 +1074,28 @@ WebKit
 ```
 
 on Linux.
+
+## Continuous Integration
+
+The Playwright framework runs automatically in GitHub Actions on:
+
+- Chromium
+- Firefox
+- WebKit
+
+CI runs on Linux and includes:
+
+- Dependency installation with `npm ci`
+- TypeScript validation
+- Playwright browser installation
+- Cross-browser test execution
+- HTML report generation
+- JUnit report generation
+- JSON report generation
+- Failure screenshots, videos, and traces when applicable
+
+Workflow:
+
+`.github/workflows/playwright.yml`
+
+Local Windows execution uses installed Google Chrome and Microsoft Edge, while GitHub Actions provides Chromium, Firefox, and WebKit coverage.
