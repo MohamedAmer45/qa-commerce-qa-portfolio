@@ -1,0 +1,27 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:chrome": "playwright test --project=chrome",
+    "test:edge": "playwright test --project=edge",
+    "report": "playwright show-report ../reports/playwright/html-report",
+    "test:defects": "playwright test tests/known-defects",
+    "test:network": "playwright test tests/network",
+    "typecheck": "tsc --noEmit",
+    "test:functional": "playwright test --grep-invert @known-defect",
+    "test:regression": "playwright test --grep @regression"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.5.0",
+    "typescript": "^7.0.2"
+  }
+}
