@@ -59,3 +59,16 @@ reports/playwright/html-report/
 
 reports/postman/postman-report.html
 reports/postman/postman-report.json
+
+cypress/cypress/screenshots/
+cypress/cypress/videos/
+cypress/cypress/downloads/
+
+cypress/node_modules/
+
+reports/cypress/screenshots/
+reports/cypress/videos/
+reports/cypress/downloads/
+reports/cypress/mochawesome/
+reports/cypress/mochawesome.json
+reports/cypress/html/

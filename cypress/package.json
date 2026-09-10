@@ -1,0 +1,33 @@
+{
+  "name": "cypress",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:chrome": "cypress run --browser chrome",
+    "cy:edge": "cypress run --browser edge",
+    "typecheck": "tsc --noEmit",
+    "cy:defects": "cypress run --browser chrome --spec cypress/e2e/known-defects/**/*.cy.ts",
+    "cy:api": "cypress run --browser chrome --spec cypress/e2e/api/**/*.cy.ts",
+    "cy:functional": "cypress run --browser chrome --spec cypress/e2e/smoke/**/*.cy.ts,cypress/e2e/authentication/**/*.cy.ts,cypress/e2e/products/**/*.cy.ts,cypress/e2e/cart/**/*.cy.ts,cypress/e2e/checkout/**/*.cy.ts,cypress/e2e/account/**/*.cy.ts,cypress/e2e/contact/**/*.cy.ts,cypress/e2e/qa-lab/**/*.cy.ts",
+    "cy:ci": "npm run typecheck && npm run cy:functional && npm run cy:api",
+    "cy:report:merge": "mochawesome-merge ../reports/cypress/mochawesome/*.json -o ../reports/cypress/mochawesome.json",
+    "cy:report:html": "marge ../reports/cypress/mochawesome.json --reportDir ../reports/cypress/html --reportFilename mochawesome --inline",
+    "cy:report": "npm run cy:report:merge && npm run cy:report:html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "cypress": "^16.0.0",
+    "mochawesome": "^8.0.1",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2",
+    "typescript": "^7.0.2"
+  }
+}
