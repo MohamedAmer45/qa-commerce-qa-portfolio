@@ -5,9 +5,10 @@
 [![Cypress Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cypress.yml)
 [![Postman Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/postman.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/postman.yml)
 [![Release](https://img.shields.io/github/v/release/MohamedAmer45/qa-commerce-qa-portfolio)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/releases)
-[![License](https://img.shields.io/badge/license-Portfolio-blue)](#)
 
-A comprehensive **Software Quality Engineering portfolio** demonstrating the complete QA lifecycle against a purpose-built e-commerce application.
+A comprehensive Software Quality Engineering portfolio demonstrating manual testing, UI automation, REST API testing, defect management, reporting, cross-browser validation, and CI/CD against a purpose-built e-commerce application.
+
+The project covers the full QA lifecycle from requirements analysis and test design through execution, defect reporting, automation, traceability, and continuous integration.
 
 ### Live Application
 
@@ -31,13 +32,57 @@ https://qa-commerce-lab.vercel.app
 
 ### Automation at a Glance
 
-| Framework | Primary Purpose | Coverage |
-|---|---|---:|
-| Selenium | Cross-browser UI automation | 100+ tests |
-| Playwright | Modern UI and network automation | 100+ logical tests |
-| Cypress | UI + REST API automation | 173 logical tests |
-| Postman / Newman | Comprehensive REST API automation | Extensive API suite |
-| Manual QA | Functional, regression, exploratory and edge cases | 400+ documented cases |
+| Framework        | Primary Purpose                                    |              Coverage |
+| ---------------- | -------------------------------------------------- | --------------------: |
+| Selenium         | Cross-browser UI automation                        |            100+ tests |
+| Playwright       | Modern UI and network automation                   |    100+ logical tests |
+| Cypress          | UI + REST API automation                           |     173 logical tests |
+| Postman / Newman | Comprehensive REST API automation                  |   Extensive API suite |
+| Manual QA        | Functional, regression, exploratory and edge cases | 400+ documented cases |
+
+## Visual Showcase
+
+The screenshots below are captured from manual test execution against the live QA Commerce Lab application.
+
+### Product Catalog
+
+![QA Commerce Lab product catalog](docs/assets/portfolio/products.png)
+
+Product catalog validation covering product rendering, pricing, stock states, search, filtering and sorting.
+
+### Authentication
+
+![Successful QA Commerce Lab login](docs/assets/portfolio/login.png)
+
+Successful authentication using the deterministic QA seed account after validation of positive and negative login scenarios.
+
+### Coupon Validation
+
+![SAVE10 coupon applied](docs/assets/portfolio/coupon.png)
+
+Shopping-cart validation showing the `SAVE10` discount applied and monetary calculations verified.
+
+### Successful Checkout
+
+![Successful checkout](docs/assets/portfolio/checkout.png)
+
+End-to-end checkout validation through successful order completion and order-reference generation.
+
+## Automation & CI Evidence
+
+The portfolio includes automated UI and REST API validation integrated into repeatable local and CI workflows.
+
+### Cypress Automation Report
+
+![Cypress Mochawesome automation report](docs/assets/portfolio/automation/cypress-report.png)
+
+Cypress execution produces structured Mochawesome results covering the normal UI and REST API regression suites, with confirmed known defects isolated from the expected-green pipeline.
+
+### GitHub Actions CI
+
+![QA Commerce Lab GitHub Actions](docs/assets/portfolio/automation/github-actions.png)
+
+Automated quality checks run through GitHub Actions for Selenium, Playwright, Cypress, and Postman/Newman. The primary pipelines execute expected-green regression coverage while known-defect verification is maintained separately.
 
 ### Confirmed Defects
 
@@ -48,33 +93,26 @@ The project currently includes four documented and automated defects:
 - `BUG-UI-CHK-002` — Impossible card expiry month accepted
 - `BUG-API-ORD-001` — Duplicate order lines bypass aggregated stock validation
 
-Known-defect tests intentionally continue asserting the **correct requirement** rather than accepting defective application behavior.
----
+## Known-defect tests intentionally continue asserting the **correct requirement** rather than accepting defective application behavior.
+
+## Table of Contents
 
 ## Table of Contents
 
 - [Project Overview](#project-overview)
-- [Application Under Test](#application-under-test)
-- [Portfolio Objectives](#portfolio-objectives)
-- [Technology Stack](#technology-stack)
-- [Repository Structure](#repository-structure)
-- [Testing Architecture](#testing-architecture)
-- [Manual QA Coverage](#manual-qa-coverage)
+- [Test Strategy](#test-strategy)
+- [Manual Testing](#manual-testing)
 - [API Testing](#api-testing)
-- [Selenium Automation](#selenium-automation)
-- [Playwright Automation](#playwright-automation)
-- [Cypress Automation](#cypress-automation)
-- [Postman and Newman](#postman-and-newman)
+- [Selenium](#selenium)
+- [Playwright](#playwright)
+- [Cypress](#cypress)
+- [Postman / Newman](#postman--newman)
 - [CI/CD](#cicd)
+- [Test Reports & Evidence](#test-reports--evidence)
+- [Repository Structure](#repository-structure)
+- [Running the Project](#running-the-project)
 - [Known Defect Strategy](#known-defect-strategy)
-- [Confirmed Defects](#confirmed-defects)
-- [Reporting and Evidence](#reporting-and-evidence)
-- [Test Design Techniques](#test-design-techniques)
-- [Cross-Browser Testing](#cross-browser-testing)
-- [Quality Engineering Principles](#quality-engineering-principles)
-- [Quick Start](#quick-start)
-- [Framework Commands](#framework-commands)
-- [Portfolio Highlights](#portfolio-highlights)
+- [Key QA Engineering Highlights](#key-qa-engineering-highlights)
 
 ---
 
