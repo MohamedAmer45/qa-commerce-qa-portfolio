@@ -1,30 +1,54 @@
 # QA Commerce Lab — Software Quality Engineering Portfolio
 
-A comprehensive end-to-end Software Quality Engineering portfolio built around **QA Commerce Lab**, a purpose-designed e-commerce application containing realistic workflows, boundary conditions, deterministic failure modes, and intentionally discoverable defects.
+[![Selenium Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/selenium.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/selenium.yml)
+[![Playwright Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/playwright.yml)
+[![Cypress Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cypress.yml)
+[![Postman Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/postman.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/postman.yml)
+[![Release](https://img.shields.io/github/v/release/MohamedAmer45/qa-commerce-qa-portfolio)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/releases)
+[![License](https://img.shields.io/badge/license-Portfolio-blue)](#)
 
-The project demonstrates the complete QA lifecycle:
+A comprehensive **Software Quality Engineering portfolio** demonstrating the complete QA lifecycle against a purpose-built e-commerce application.
 
-- Requirements analysis
-- Test planning
-- Test scenario design
-- Detailed test-case design
-- Traceability
-- Manual testing
-- Smoke and regression testing
-- Exploratory testing
-- Edge-case testing
-- Defect reporting
-- Test evidence
-- REST API testing
-- Selenium automation
-- Playwright automation
-- Cypress automation
-- Postman/Newman automation
-- Cross-browser testing
-- CI/CD with GitHub Actions
-- Automated reporting
-- Known-defect management
+### Live Application
 
+**QA Commerce Lab:**  
+https://qa-commerce-lab.vercel.app
+
+### What This Project Demonstrates
+
+- 400+ documented UI and REST API test cases
+- Manual, smoke, regression, exploratory and edge-case testing
+- Selenium + Java + TestNG + Maven + Allure
+- Playwright + TypeScript
+- Cypress + TypeScript + Mochawesome
+- Postman + Newman REST API automation
+- UI and backend API automation
+- Chrome, Firefox, Edge and WebKit coverage
+- GitHub Actions CI/CD
+- Automated screenshots, videos, traces and reports
+- Requirements-to-test traceability
+- Real defect reports with reproducible automated known-defect tests
+
+### Automation at a Glance
+
+| Framework | Primary Purpose | Coverage |
+|---|---|---:|
+| Selenium | Cross-browser UI automation | 100+ tests |
+| Playwright | Modern UI and network automation | 100+ logical tests |
+| Cypress | UI + REST API automation | 173 logical tests |
+| Postman / Newman | Comprehensive REST API automation | Extensive API suite |
+| Manual QA | Functional, regression, exploratory and edge cases | 400+ documented cases |
+
+### Confirmed Defects
+
+The project currently includes four documented and automated defects:
+
+- `BUG-UI-CART-001` — Sticker Pack quantity limit bypass
+- `BUG-UI-CHK-001` — Cart counter remains stale after checkout
+- `BUG-UI-CHK-002` — Impossible card expiry month accepted
+- `BUG-API-ORD-001` — Duplicate order lines bypass aggregated stock validation
+
+Known-defect tests intentionally continue asserting the **correct requirement** rather than accepting defective application behavior.
 ---
 
 ## Table of Contents
