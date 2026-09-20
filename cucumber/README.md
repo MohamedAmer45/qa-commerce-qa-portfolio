@@ -104,9 +104,19 @@ mvn test -Dcucumber.filter.tags="@checkout and not @known-defect" -Dheadless=tru
 # Confirmed defects (expected to fail)
 mvn test -Dcucumber.filter.tags="@known-defect" -Dheadless=true
 
-# Another browser
-mvn test -Dbrowser=firefox -Dheadless=true
+# Firefox
+mvn test -Dbrowser=firefox -Dheadless=true -Dcucumber.filter.tags="not @known-defect"
 ```
+
+PowerShell equivalent of the CI command, copy and paste ready:
+
+```powershell
+cd C:\Projects\qa-commerce-qa-portfolio\cucumber
+mvn test "-Dcucumber.filter.tags=not @known-defect" "-Dheadless=true"
+```
+
+Chrome and Firefox have been run against the full suite. Edge is supported by `DriverFactory`
+(`-Dbrowser=edge`) but has not been run.
 
 > **Windows PowerShell:** PowerShell splits `-Dcucumber.filter.tags=...` at the dot, which makes
 > Maven fail with `Unknown lifecycle phase ".filter.tags=..."`. Quote the whole argument:
@@ -129,6 +139,20 @@ mvn test -Dbrowser=firefox -Dheadless=true
 | Surefire | `target/surefire-reports` |
 | Allure results | `target/allure-results` (`allure serve target/allure-results`) |
 | Failure screenshots | `reports/cucumber/screenshots` (also embedded in the Cucumber and Allure reports) |
+
+## Reliability notes
+
+- **Live application:** the suite runs against `https://qa-commerce-lab.vercel.app`, so it needs
+  network access and the site to be up.
+- **Connection retries:** `ApiClient` retries a request up to three times, but only when the
+  connection itself cannot be established (the request never reached the server). Real API
+  responses, including 4xx and 5xx errors, are never retried. A run can still fail with
+  `HTTP connect timed out` if the site is unreachable for longer than the three attempts.
+- **Firefox and cart quantities:** the shared `CartPage` selects the quantity input with
+  JavaScript before typing, because `Ctrl+A` does not select the contents of a number input in
+  Firefox. The fix lives in the Selenium module, so it applies to both suites.
+- **Known-defect scenarios** fail by design when they are included in a run; that is the
+  expected result while the defects remain open.
 
 ## Continuous integration
 

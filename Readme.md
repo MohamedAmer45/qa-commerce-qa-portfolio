@@ -109,6 +109,7 @@ The project currently includes four documented and automated defects:
 - [Selenium](#selenium)
 - [Playwright](#playwright)
 - [Cypress](#cypress)
+- [Cucumber BDD](#cucumber-bdd)
 - [Postman / Newman](#postman--newman)
 - [CI/CD](#cicd)
 - [Test Reports & Evidence](#test-reports--evidence)
@@ -294,6 +295,15 @@ The project covers:
 - Mochawesome
 - Chrome
 - Microsoft Edge
+
+## Cucumber
+
+- Gherkin and Cucumber JVM
+- Java 21 and Maven
+- TestNG runner
+- Selenium for UI scenarios, Java HTTP client for REST API scenarios
+- Allure and Cucumber HTML/JSON reports
+- Chrome and Firefox
 
 ## DevOps
 
@@ -713,6 +723,58 @@ npm run cy:report
 
 ---
 
+# Cucumber BDD
+
+Directory:
+
+```text
+cucumber/
+```
+
+Framework documentation:
+
+```text
+cucumber/README.md
+```
+
+Technology:
+
+```text
+Cucumber JVM
+Gherkin
+Java 21
+Selenium
+TestNG
+Allure
+```
+
+Business-readable Gherkin scenarios covering the UI and the REST API, so every
+functionality already automated in the other suites also has a behavior specification.
+
+Coverage:
+
+```text
+20 feature files (10 UI, 10 API)
+227 scenarios in the CI run
+4 known-defect scenarios (excluded from CI)
+```
+
+Design notes:
+
+- UI scenarios reuse the Selenium page objects, `DriverFactory` and `ConfigReader` from `selenium/`
+- Only `@ui` scenarios start a browser; `@api` scenarios use a Java HTTP client
+- API requests retry only when the connection cannot be established, never on real API errors
+- Confirmed defects are tagged `@known-defect` and assert the correct behavior
+
+Run the CI suite (PowerShell, quote each `-D` argument):
+
+```powershell
+cd cucumber
+mvn test "-Dcucumber.filter.tags=not @known-defect" "-Dheadless=true"
+```
+
+---
+
 # Postman and Newman
 
 Directory:
@@ -788,11 +850,11 @@ Code pushed / pull request
             ▼
     Automated QA checks
             │
-     ┌──────┼──────┬──────┐
-     ▼      ▼      ▼      ▼
- Selenium Playwright Cypress Postman
-     │      │      │      │
-     └──────┴──────┴──────┘
+ ┌─────────┬─────────┼─────────┬─────────┐
+ ▼         ▼         ▼         ▼         ▼
+Selenium Playwright Cypress  Cucumber  Postman
+ │         │         │         │         │
+ └─────────┴─────────┴─────────┴─────────┘
             │
             ▼
       Test artifacts
@@ -1027,6 +1089,23 @@ Includes:
 
 ---
 
+## Cucumber
+
+```text
+cucumber/target/cucumber-reports/
+cucumber/target/allure-results/
+reports/cucumber/screenshots/
+```
+
+Includes:
+
+- Cucumber HTML report
+- Cucumber JSON report
+- Allure results
+- Failure screenshots
+
+---
+
 ## Postman / Newman
 
 ```text
@@ -1159,6 +1238,13 @@ Chrome
 Microsoft Edge
 ```
 
+## Cucumber
+
+```text
+Chrome
+Firefox
+```
+
 This helps validate browser-specific behavior while demonstrating cross-browser automation using different ecosystems.
 
 ---
@@ -1243,6 +1329,16 @@ cd cypress
 
 npm install
 npm run cy:ci
+```
+
+---
+
+## Cucumber
+
+```powershell
+cd cucumber
+
+mvn test "-Dcucumber.filter.tags=not @known-defect" "-Dheadless=true"
 ```
 
 ---
@@ -1362,6 +1458,40 @@ npm run cy:report
 
 ---
 
+## Cucumber
+
+Functional suite (quote each `-D` argument in PowerShell):
+
+```powershell
+mvn test "-Dcucumber.filter.tags=not @known-defect" "-Dheadless=true"
+```
+
+Smoke only:
+
+```powershell
+mvn test "-Dcucumber.filter.tags=@smoke" "-Dheadless=true"
+```
+
+API scenarios only (no browser is started):
+
+```powershell
+mvn test "-Dcucumber.filter.tags=@api"
+```
+
+Firefox:
+
+```powershell
+mvn test "-Dbrowser=firefox" "-Dheadless=true" "-Dcucumber.filter.tags=not @known-defect"
+```
+
+Known defects (expected to fail):
+
+```powershell
+mvn test "-Dcucumber.filter.tags=@known-defect" "-Dheadless=true"
+```
+
+---
+
 ## Postman
 
 Functional API automation:
@@ -1417,6 +1547,7 @@ Key highlights include:
 - 100+ Playwright logical automated tests
 - 173 Cypress logical automated tests
 - Extensive Postman/Newman API automation
+- Cucumber BDD scenarios for UI and REST API
 - UI and REST API coverage
 - Positive, negative and boundary testing
 - Real documented defects
@@ -1447,6 +1578,7 @@ Postman API Automation          Complete
 Selenium Automation             Complete
 Playwright Automation           Complete
 Cypress Automation              Complete
+Cucumber BDD Automation         Complete
 Automated Reporting             Complete
 GitHub Actions CI               Complete
 ```
