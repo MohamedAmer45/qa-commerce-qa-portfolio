@@ -4,7 +4,7 @@
 [![Playwright Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/playwright.yml)
 [![Cypress Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cypress.yml)
 [![Postman Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/postman.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/postman.yml)
-[![Cucumber Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cucumber.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cucumber.yml)
+[![Cucumber Tests](https://img.shields.io/github/actions/workflow/status/MohamedAmer45/qa-commerce-qa-portfolio/cucumber.yml?branch=main&label=Cucumber%20Tests&logo=cucumber&logoColor=white)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cucumber.yml)
 [![Release](https://img.shields.io/github/v/release/MohamedAmer45/qa-commerce-qa-portfolio)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/releases)
 
 A comprehensive Software Quality Engineering portfolio demonstrating manual testing, UI automation, REST API testing, defect management, reporting, cross-browser validation, and CI/CD against a purpose-built e-commerce application.
