@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qacommercelab.utils.ConfigReader;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URI;
 import java.net.http.HttpClient;
+import java.net.http.HttpConnectTimeoutException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
@@ -20,6 +22,8 @@ import java.util.Map;
 public class ApiClient {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    private static final int CONNECT_ATTEMPTS = 3;
 
     private final HttpClient client = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(15))
@@ -55,9 +59,7 @@ public class ApiClient {
         long start = System.nanoTime();
 
         try {
-            response = client.send(
-                    request.build(),
-                    HttpResponse.BodyHandlers.ofString());
+            response = sendWithConnectRetry(request.build());
 
         } catch (IOException exception) {
             throw new IllegalStateException(
@@ -70,6 +72,26 @@ public class ApiClient {
         }
 
         elapsedMilliseconds = (System.nanoTime() - start) / 1_000_000;
+    }
+
+    /**
+     * Retries only when the connection itself could not be established. The request
+     * never reached the server in that case, so retrying is safe for every method
+     * and does not hide real API failures.
+     */
+    private HttpResponse<String> sendWithConnectRetry(HttpRequest request)
+            throws IOException, InterruptedException {
+
+        for (int attempt = 1; ; attempt++) {
+            try {
+                return client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            } catch (ConnectException | HttpConnectTimeoutException exception) {
+                if (attempt == CONNECT_ATTEMPTS) {
+                    throw exception;
+                }
+            }
+        }
     }
 
     public int status() {
