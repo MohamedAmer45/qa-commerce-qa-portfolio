@@ -15,9 +15,10 @@ function getOutput(): Cypress.Chainable<string> {
 }
 
 function expectOutputStatus(status: number): void {
-  getOutput().then((text) => {
-    expect(text).to.include(`"status": ${status}`);
-  });
+  // cy.wait() only waits for the network response; the page replaces "Loading…"
+  // a moment later. Assert with should() so Cypress retries until the text appears,
+  // instead of reading the output once inside a non-retrying then() callback.
+  cy.get("#out").should("contain.text", `"status": ${status}`);
 }
 
 describe("QA Lab", () => {
