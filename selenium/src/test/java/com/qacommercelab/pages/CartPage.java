@@ -3,6 +3,7 @@ package com.qacommercelab.pages;
 import com.qacommercelab.utils.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -100,12 +101,10 @@ public class CartPage {
 
         // Select the existing value instead of calling clear(),
         // because clear() causes this application to re-render the cart.
-        input.sendKeys(
-                Keys.chord(Keys.CONTROL, "a"),
-                String.valueOf(quantity));
+        replaceQuantity(input, quantity);
 
-        // Click outside the field to trigger onchange.
-        driver.findElement(pageHeading).click();
+        // Tab out of the field to trigger onchange.
+        input.sendKeys(Keys.TAB);
 
         // The application replaces the original input after onchange.
         wait.until(
@@ -127,12 +126,10 @@ public class CartPage {
                 ExpectedConditions.visibilityOfElementLocated(locator));
 
         // Do not use clear() here.
-        input.sendKeys(
-                Keys.chord(Keys.CONTROL, "a"),
-                String.valueOf(quantity));
+        replaceQuantity(input, quantity);
 
-        // Trigger onchange.
-        driver.findElement(pageHeading).click();
+        // Tab out of the field to trigger onchange.
+        input.sendKeys(Keys.TAB);
 
         // Both valid and invalid quantity changes cause render().
         wait.until(
@@ -141,6 +138,19 @@ public class CartPage {
         // Wait for the replacement input.
         wait.until(
                 ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    /**
+     * Replaces the quantity without clear(), which re-renders the cart.
+     * Selecting through JavaScript works in every browser; Ctrl+A does not
+     * select the contents of a number input in Firefox.
+     */
+    private void replaceQuantity(WebElement input, int quantity) {
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].focus(); arguments[0].select();",
+                input);
+
+        input.sendKeys(String.valueOf(quantity));
     }
 
     public String getToastMessage() {

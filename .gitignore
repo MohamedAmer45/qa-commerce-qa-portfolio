@@ -72,3 +72,5 @@ reports/cypress/downloads/
 reports/cypress/mochawesome/
 reports/cypress/mochawesome.json
 reports/cypress/html/
+# Cucumber failure screenshots
+reports/cucumber/
