@@ -1,5 +1,7 @@
 # QA Commerce Lab — Cucumber BDD Automation
 
+[![Cucumber Tests](https://img.shields.io/github/actions/workflow/status/MohamedAmer45/qa-commerce-qa-portfolio/cucumber.yml?branch=main&label=Cucumber%20Tests&logo=cucumber&logoColor=white)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cucumber.yml)
+
 Behavior-driven tests for the **QA Commerce Lab** application, written in Gherkin and executed with Cucumber JVM.
 The suite covers the storefront UI (through Selenium) and the REST API (through Java's HTTP client), so every
 functionality already covered by the Selenium, Playwright, Cypress and Postman suites also has a readable,
