@@ -4,6 +4,7 @@
 [![Playwright Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/playwright.yml)
 [![Cypress Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cypress.yml)
 [![Postman Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/postman.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/postman.yml)
+[![Cucumber Tests](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cucumber.yml/badge.svg)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/actions/workflows/cucumber.yml)
 [![Release](https://img.shields.io/github/v/release/MohamedAmer45/qa-commerce-qa-portfolio)](https://github.com/MohamedAmer45/qa-commerce-qa-portfolio/releases)
 
 A comprehensive Software Quality Engineering portfolio demonstrating manual testing, UI automation, REST API testing, defect management, reporting, cross-browser validation, and CI/CD against a purpose-built e-commerce application.
@@ -23,6 +24,7 @@ https://qa-commerce-lab.vercel.app
 - Playwright + TypeScript
 - Cypress + TypeScript + Mochawesome
 - Postman + Newman REST API automation
+- Cucumber BDD (Gherkin) scenarios for UI and REST API
 - UI and backend API automation
 - Chrome, Firefox, Edge and WebKit coverage
 - GitHub Actions CI/CD
@@ -38,6 +40,7 @@ https://qa-commerce-lab.vercel.app
 | Playwright       | Modern UI and network automation                   |    100+ logical tests |
 | Cypress          | UI + REST API automation                           |     173 logical tests |
 | Postman / Newman | Comprehensive REST API automation                  |   Extensive API suite |
+| Cucumber BDD     | Gherkin scenarios for UI and REST API              |         227 scenarios |
 | Manual QA        | Functional, regression, exploratory and edge cases | 400+ documented cases |
 
 ## Visual Showcase
@@ -82,7 +85,7 @@ Cypress execution produces structured Mochawesome results covering the normal UI
 
 ![QA Commerce Lab GitHub Actions](docs/assets/portfolio/automation/github-actions.png)
 
-Automated quality checks run through GitHub Actions for Selenium, Playwright, Cypress, and Postman/Newman. The primary pipelines execute expected-green regression coverage while known-defect verification is maintained separately.
+Automated quality checks run through GitHub Actions for Selenium, Playwright, Cypress, Cucumber, and Postman/Newman. The primary pipelines execute expected-green regression coverage while known-defect verification is maintained separately.
 
 ### Confirmed Defects
 
@@ -352,6 +355,11 @@ qa-commerce-qa-portfolio/
 │   ├── tsconfig.json
 │   └── cypress/
 │
+├── cucumber/
+│   ├── README.md
+│   ├── pom.xml
+│   └── src/
+│
 ├── test-data/
 │
 ├── reports/
@@ -365,7 +373,8 @@ qa-commerce-qa-portfolio/
         ├── selenium.yml
         ├── playwright.yml
         ├── postman.yml
-        └── cypress.yml
+        ├── cypress.yml
+        └── cucumber.yml
 ```
 
 ---
@@ -767,7 +776,8 @@ Workflows:
 ├── selenium.yml
 ├── playwright.yml
 ├── postman.yml
-└── cypress.yml
+├── cypress.yml
+└── cucumber.yml
 ```
 
 CI validates:
